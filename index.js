@@ -6,6 +6,12 @@ let app = express();
 
 let restUrl = process.env.RESTURL;
 let appSecret = process.env.APPSECRET;
+
+if (!restUrl || !appSecret)
+{
+	console.log('cannot run without restUrl nor appSecret');
+}
+
 let exchangeUrl = restUrl + 'apps-auth/grant-token/';
 
 let baseHeaders = {

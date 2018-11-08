@@ -27,9 +27,16 @@ app.get('/:value', (req, res) => {
 		headers: baseHeaders		
 	};
 
+	console.log(`requesting url ${exchangeForGrant.url}`)
 	request(exchangeForGrant, (error, response, body) => {
 		if (error || response.statusCode != 200) {
 			console.log('exchange error', error, body);
+			res.json({ 
+				message: 'unable to exchange for grant',
+				error: error 
+				}
+			)
+			return
 		}
 
 		let grantToken = body;
@@ -42,7 +49,7 @@ app.get('/:value', (req, res) => {
 		request(getCompanyInfo, (subError, subResponse, subBody) => {
 			if (subError || subResponse.statusCode != 200) {
 				console.log('company error', subError, response);
-				return;
+				return
 			}
 
 			let companyInfo = JSON.parse(subBody);

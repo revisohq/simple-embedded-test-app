@@ -1,11 +1,10 @@
 
-require('dotenv').config();
 let express = require('express');
 let request = require('request');
 let app = express();
 
-let restUrl = process.env.RESTURL;
-let appSecret = process.env.APPSECRET;
+let restUrl = process.env.RESTURL || 'http://localhost/reviso-rest/';
+let appSecret = process.env.APPSECRET || process.argv.slice(2)[0];
 
 if (!restUrl || !appSecret)
 {
@@ -53,6 +52,7 @@ app.get('/:value', (req, res) => {
 			}
 
 			let companyInfo = JSON.parse(subBody);
+			companyInfo.hackValue = value
 			res.json(companyInfo);
 		});
 	});
